@@ -1,0 +1,15 @@
+[
+    {
+        "no_barang": "",
+        "user": "",
+        "periode": "",
+        "ket": "",
+        "details": [
+            {
+                "nama_barang": "",
+                "jumlah": "",
+                "ket2": ""
+            }
+        ]
+    }
+]
