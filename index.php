@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $dataFile = 'data.json';
 $data = json_decode(file_get_contents($dataFile), true);
 
@@ -25,10 +27,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $data[] = $newItem;
     file_put_contents($dataFile, json_encode($data));
+
+    // Simpan user dan periode ke dalam sesi
+    $_SESSION['user'] = $_POST['user'];
+    $_SESSION['periode'] = $_POST['periode'];
+    $_SESSION['ket'] = $_POST['ket'];
+
     header('Location: index.php');
     exit;
 }
 ?>
+
+
+<?php include "../barang/layout/header.php" ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+</html>
+
 <!DOCTYPE html>
 <html lang="en">
 
