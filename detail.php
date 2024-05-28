@@ -60,7 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             required>
                     </div>
                     <div>
-                        <input type="submit" name="simpan" value="Update Data" class="btn btn-primary">
+                        <input type="submit" name="simpan" value="Update Data" class="btn btn-primary"
+                            onclick="return confirm('yakin mau update data?')">
                     </div>
                 </form>
             </div>
@@ -89,39 +90,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <td><?= htmlspecialchars($detail['nama_barang']) ?></td>
                         <td><?= htmlspecialchars($detail['jumlah']) ?></td>
                         <td><?= htmlspecialchars($detail['ket2']) ?></td>
-                        <td><a class="btn btn-danger"
+                        <td><a class="btn btn-danger" onclick="return confirm('yakin mau hapus data?')"
                                 href="delete_detail.php?index=<?= $index ?>&detailIndex=<?= $detailIndex ?>">Hapus</a>
                         </td>
                     </tr>
                     <?php endforeach; 
-    } else {
-        echo "<tr><td colspan='5'>Tidak ada detail tersedia.</td></tr>";
-    }
-    ?>
+                        } else {
+                            echo "<tr><td colspan='5'>Tidak ada detail tersedia.</td></tr>";
+                        }
+                        ?>
                 </tbody>
-
-
             </table>
+            <br>
+            <div class="d-flex justify-content-end">
+                <a href="print.php?index=<?= $index ?>" id="print" class="btn btn-success" target="_blank">Print <i
+                        class="fas fa-print"></i></a>
+            </div>
         </div>
     </div>
 
     <div id="detailPopupForm" class="popup">
-        <div class="popup-content">
+        <div class=" popup-content">
             <span class="close">&times;</span>
-            <h2>Tambah Barang</h2>
-            <form action="add_detail.php?index=<?php echo $index; ?>" method="POST">
-                <label for="nama_barang">Nama Barang:</label>
-                <input type="text" id="nama_barang" name="nama_barang" required>
-
-                <label for="jumlah">Jumlah:</label>
-                <input type="text" id="jumlah" name="jumlah" required>
-
-                <label for="ket2">Keterangan:</label>
-                <input type="text" id="ket2" name="ket2" required>
-
-                <input type="submit" value="Tambah Detail">
-            </form>
-
+            <div class="container" style="padding:0; margin:0 auto;">
+                <div class="card">
+                    <div class="card-header">
+                        Form Tambah Barang
+                    </div>
+                    <br>
+                    <form action="add_detail.php?index=<?php echo $index; ?>" method="POST">
+                        <div class="input-group mb-3">
+                            <label for="nama_barang">Nama Barang: <icon style="color:red"> *
+                                </icon></label>
+                            <input type="text" id="nama_barang" name="nama_barang" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="jumlah">Jumlah: <icon style="color:red"> *
+                                </icon></label>
+                            <input type="text" id="jumlah" name="jumlah" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ket2">Keterangan: <icon style="color:red"> *
+                                </icon></label>
+                            <input type="text" id="ket2" name="ket2" required>
+                        </div>
+                        <input type="submit" value="Simpan" class="btn btn-primary">
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
