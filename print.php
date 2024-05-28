@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,25 +55,74 @@ tr.tr1 {
     </p>
 </header>
 
+<?php
+// Memulai sesi
+session_start();
+
+// Periksa apakah parameter 'index' ada di URL
+if (!isset($_GET['index'])) {
+    die("Index not provided");
+}
+
+$index = $_GET['index'];
+
+// Membaca file data.json
+$dataFile = 'data.json';
+$data = json_decode(file_get_contents($dataFile), true);
+
+// Inisialisasi variabel user dan periode
+$user = 'N/A';
+$periode = 'N/A';
+$no_barang = 'N/A';
+$ket = 'N/A';
+
+
+// Ambil user dan periode berdasarkan indeks yang diberikan
+if (isset($data[$index])) {
+    $user = htmlspecialchars($data[$index]['user']);
+    $periode = htmlspecialchars($data[$index]['periode']);
+    $no_barang = htmlspecialchars($data[$index]['no_barang']);
+    $ket = htmlspecialchars($data[$index]['ket']);
+    $details = isset($data[$index]['details']) ? $data[$index]['details'] : [];
+
+} else {
+    die("Invalid index");
+}
+?>
+
 <body>
     <div class="container">
         <table>
-            <th colspan="2" style="text-align:left;">No Barang: </th>
-            <th colspan="2" style="text-align:left;">User: </th>
+            <th colspan="4" style="text-align:center;"><?= $no_barang ?></th>
             <tr>
+                <th colspan="1" style="text-align:center;">User: <?= $user ?></th>
+                <th colspan="1" style="text-align:center;">Periode: <?= $periode ?></th>
             </tr>
+        </table>
+    </div>
+    <br>
+    <div class="container">
+        <table>
             <tr>
                 <th style="width:4%">No.</th>
-                <th style="width:47%">Nama Barang</th>
+                <th style="width:45%">Nama Barang</th>
                 <th style="width:20%">Jumlah</th>
                 <th>Keterangan</th>
             </tr>
+            <?php if (!empty($details)): ?>
+            <?php foreach ($details as $detailIndex => $detail): ?>
             <tr>
-                <td>1</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td><?= $detailIndex + 1 ?></td>
+                <td><?= htmlspecialchars($detail['nama_barang']) ?></td>
+                <td><?= htmlspecialchars($detail['jumlah']) ?></td>
+                <td><?= htmlspecialchars($detail['ket2']) ?></td>
             </tr>
+            <?php endforeach; ?>
+            <?php else: ?>
+            <tr>
+                <td colspan="4">Tidak ada detail tersedia.</td>
+            </tr>
+            <?php endif; ?>
             <tr>
                 <td>2</td>
                 <td></td>
